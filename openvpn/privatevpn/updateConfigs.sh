@@ -31,7 +31,7 @@ us-buf.pvdata.host
 us-los.pvdata.host
 us-nyc4.pvdata.host
 us-nyc.pvdata.host
-193.180.119.2
+se-sto.pvdata.host
 EOF
 )
 
@@ -82,6 +82,9 @@ mkdir -p tcp \
 # Download/unpack PrivateVPN configs
 curl -sOJL "$PVPN_CONFIGS_URL"
 unzip -qo -d extracted *.zip
+
+# Fix Stockholm remote IP incorrect (2021 issue)
+find ./extracted -name '*-Stockholm-*.ovpn' -exec sed -i 's/193.180.119.2/se-sto.pvdata.host/' '{}' \;
 
 # Copy original PrivateVPN configuration files
 find ./extracted -name '*-TUN-1194.ovpn' -exec cp {} ./ \;
